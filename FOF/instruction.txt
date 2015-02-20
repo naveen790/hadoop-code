@@ -1,0 +1,1 @@
+this hadoop code is to find fried of friends so named fof. It has implementation in both java and python. Implemented using hadoop 0.20. 

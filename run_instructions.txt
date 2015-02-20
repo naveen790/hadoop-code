@@ -1,0 +1,28 @@
+JAVA JAR RUN
+
+COMPILING
+javac -classpath $HADOOP_INSTALL/share/hadoop/common/hadoop-common-2.4.1.jar:$HADOOP_INSTALL/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.4.1.jar:$HADOOP_INSTALL/share/hadoop/common/lib/commons-cli-1.2.jar org/myorg/WordCount.java
+
+jar -cvf wc.jar org/myorg/WordCount*.class
+
+
+COPY FILES TO HDFS
+
+hadoop fs -put input/hdfstest.txt
+
+RETRIVING RESULT FROM HDFS
+
+hadoop fs -get output
+
+RUN THE CODE USING 
+
+hadoop jar wc.jar org.myorg.WordCount /user/hduser/input/hdfstest.txt /user/hduser/output
+
+
+PYTHON STREAMING 
+
+TEST
+echo "foo foo quux labs foo bar quux" | /home/hduser/mapper.py | /home/hduser/reducer.py
+
+RUN
+hadoop jar $HADOOP_INSTALL/share/hadoop/tools/lib/hadoop-streaming-2.4.1.jar -file /home/hduser/mapper.py  -mapper /home/hduser/mapper.py -file /home/hduser/reducer.py  -reducer /home/hduser/reducer.py -input /user/hduser/input/* -output /user/hduser/output
